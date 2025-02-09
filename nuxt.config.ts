@@ -6,17 +6,11 @@ export default defineNuxtConfig({
         '@nuxt/ui',
         '@nuxtjs/tailwindcss',
           '@pinia/nuxt',
-          'pinia-plugin-persistedstate/nuxt',
-          '@sidebase/nuxt-auth'
+          'pinia-plugin-persistedstate/nuxt'
     ],
     pages: true,
     tailwindcss: {
         exposeConfig: true,
         viewer: true,
-    },
-    auth: {
-        isEnabled: false,
-        disableServerSideAuth: false,
-        originEnvKey: 'AUTH_ORIGIN'
     }
 })
