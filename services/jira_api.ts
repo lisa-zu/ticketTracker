@@ -22,9 +22,6 @@ const requestToken = async (code:string): Promise<string | null> => {
                 }
             }
         )
-        console.info('response data: ', response.data)
-        console.info('response headers: ', response.headers)
-        console.info('response status: ', response.status)
         return response.data.access_token
     } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -36,4 +33,36 @@ const requestToken = async (code:string): Promise<string | null> => {
     }
 }
 
-export default requestToken
+// TICKET METHODS
+interface AtlassianCloudIdResponse {
+    id: string;
+    name: string;
+    url: string;
+    scopes: string[];
+    avatarUrl: string;
+}
+const requestCloudIds = async (token: string): Promise<AtlassianCloudIdResponse[] | null> => {
+    try {
+        const response = await axios.get<AtlassianCloudIdResponse[]>(
+            'https://api.atlassian.com/oauth/token/accessible-resources', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                }
+            }
+        )
+        return response.data as AtlassianCloudIdResponse[]
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error('Error fetching token:', error.response?.data || error.message)
+        } else {
+            console.error('Unexpected error:', error);
+        }
+        return null
+    }
+}
+
+export {
+    requestToken,
+    requestCloudIds
+}
