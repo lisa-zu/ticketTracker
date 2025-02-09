@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export const useUserStore = defineStore('user', {
     state: () => ({
-        jiraHostName: '',
-        jiraUserEmailAddress: '',
-        jiraUserAPIToken: ''
+        userSessionId: ''
     }),
-    persist: {
-        storage: piniaPluginPersistedstate.cookies(),
-    }
+    actions: {
+        setUserSessionId(sessionId: string) {
+            this.userSessionId = sessionId
+        }
+    },
+    persist: true
 })
