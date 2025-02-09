@@ -7,19 +7,30 @@ export default {
       layout: false
     })
   },
-  created() {
-    this.configureApp()
-  },
   data() {
     return {
       userStore: useUserStore(),
     }
   },
   methods: {
-    configureApp() {
+    async configureApp() {
       // configure the app
       // 1. create user session id
-      // 2. login with jira
+      await $fetch('/api/oauth/state')
+          .then(res => {
+            // 2. save session id to pinia user store
+            this.userStore.setUserSessionId(res.sessionId)
+            // 3. redirect to jira auth with session id
+            navigateTo(res.authUrl, {
+              open: {
+                target: '_top',
+                windowFeatures: {
+                  width: 500,
+                  height: 500
+                }
+              }
+            })
+          })
     }
   },
 }
