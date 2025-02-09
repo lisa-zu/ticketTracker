@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
                     setCookie(event, "cloud_ids", cloudIdStrings.toString(), { httpOnly: true, secure: true })
                 }
             })
-        return sendRedirect(event, '/settings')
+        return sendRedirect(event, '/tickets')
     } catch (error) {
         console.error('OAuth Callback Error:', error);
         return sendRedirect(event, '/error')
