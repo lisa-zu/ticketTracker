@@ -10,6 +10,8 @@ export default defineEventHandler(async (event) => {
                 if (token) {
                     setCookie(event, "jira_token", token, { httpOnly: true, secure: true })
                     return sendRedirect(event, '/dashboard')
+                } else {
+                    console.error('no token provided')
                 }
             })
     } catch (error) {
